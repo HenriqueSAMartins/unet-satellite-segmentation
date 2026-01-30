@@ -1,0 +1,28 @@
+# Datasets
+dataset/
+**/dataset/
+
+# Outputs
+output/
+
+# Checkpoints and models
+*.pt
+*.pth
+*.ckpt
+
+# Logs
+logs/
+*.log
+
+# Cache and temporary files
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Environments
+.venv/
+venv/
+
+# Operating system
+.DS_Store
+Thumbs.db
