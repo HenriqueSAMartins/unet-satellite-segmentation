@@ -2,8 +2,6 @@
 
 A complete PyTorch implementation of U-Net for **10-class semantic segmentation** of multispectral satellite imagery. This project includes training pipeline, comprehensive metrics, and visualization tools for Earth observation and land cover classification tasks.
 
-![Background](images/background.jpg)
-
 ## Overview
 
 This project provides:
@@ -81,29 +79,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-> **⚠️ IMPORTANT: PyTorch Installation**
-> 
-> The `requirements.txt` installs the CPU version of PyTorch. **Before installing, verify the correct version for your machine:**
-> 
-> - **CPU only**: The default installation is fine
-> - **NVIDIA GPU (CUDA)**: Install GPU version instead
->   ```bash
->   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
->   ```
-> - **Apple Silicon (M1/M2/M3)**: Uses native Metal acceleration
->   ```bash
->   pip install torch torchvision torchaudio
->   ```
-> - **AMD GPU (ROCm)**: Use ROCm version
->   ```bash
->   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.7
->   ```
-> 
-> Check your setup at: https://pytorch.org/get-started/locally/
-> After installing the correct PyTorch version, install remaining dependencies:
-> ```bash
-> pip install numpy pandas matplotlib tifffile scikit-image
-> ```
+> **⚠️ NOTE:** Verify PyTorch version for your machine at https://pytorch.org/get-started/locally/ (CPU, CUDA, ROCm, or Apple Silicon)
 
 ## Dataset Format
 
@@ -349,96 +325,6 @@ df_filt = df[df["support_pixels"] >= MIN_SUPPORT]
 - Global: Pixel Accuracy, mIoU
 - Per-class: Class name, support, IoU, Dice, Precision, Recall, F1
 
-## Usage Examples
-
-### Training a Model
-
-```bash
-# Navigate to src directory
-cd src/
-
-# Run training
-python train.py
-
-# Outputs:
-# - outputs/best_unet.pth (best checkpoint)
-# - outputs/last_unet.pth (final checkpoint)
-# - outputs/training_history.pt (metrics history)
-# - outputs/val_cm_epoch_*.pt (confusion matrices)
-```
-
-### Running Inference on Test Data
-
-```bash
-cd src/
-
-# Run inference script
-python inference.py
-
-# Or use the Jupyter notebook
-jupyter notebook visualize_inference.ipynb
-```
-
-### Evaluating Model Performance
-
-```bash
-cd src/
-
-# Use the metrics notebook
-jupyter notebook vizualize_metrics.ipynb
-
-# This will:
-# 1. Load the best trained model
-# 2. Compute confusion matrix on entire test set
-# 3. Generate per-class metrics report
-# 4. Visualize confusion matrices and performance
-```
-
-### Exploring Dataset
-
-```bash
-cd src/
-
-# Use the data exploration notebook
-jupyter notebook visualize_data.ipynb
-
-# This will:
-# 1. Check dataset integrity
-# 2. Show sample images with visualizations
-# 3. Analyze class distribution
-```
-
-## Key Features
-
-### Data Handling
-
-- **TIFF Support**: Reads 4-band GeoTIFF imagery efficiently
-- **Robust Normalization**: Percentile-based stretch (2-98%) for each channel
-- **Memory Efficient**: HWC/CHW conversion, batch processing
-- **Ignore Mechanism**: Handles invalid pixels or ignored classes
-
-### Model Architecture
-
-- **Skip Connections**: Preserves fine-grained spatial details
-- **Batch Normalization**: Stabilizes training
-- **Bilinear Upsampling**: CPU-friendly alternative to transposed convolution
-- **Flexible Configuration**: Adjustable base channels and architecture
-
-### Training Robustness
-
-- **Checkpointing**: Resume from interruptions
-- **Atomic Saves**: Prevents corruption if interrupted mid-write
-- **Confusion Matrix**: Epoch-by-epoch metric tracking
-- **Validation Split**: Prevents overfitting detection
-- **Configuration Saving**: Reproduces exact training setup
-
-### Evaluation Depth
-
-- **Multiple Metrics**: IoU, Dice, Precision, Recall, F1
-- **Confusion Matrices**: Raw, recall-normalized, precision-normalized views
-- **Per-Class Analysis**: Support-weighted metrics
-- **Filtering Options**: Focus on well-represented classes
-
 ## Technical Details
 
 ### Data Processing Pipeline
@@ -474,11 +360,6 @@ miou = mean(iou[valid_classes])
 
 This project is provided as-is for educational and research purposes.
 
-## References
-
-- Ronneberger, O., Fischer, P., & Brox, T. (2015). U-Net: Convolutional Networks for Biomedical Image Segmentation
-- PyTorch Documentation: https://pytorch.org/docs/stable/
-- Tifffile: https://pypi.org/project/tifffile/
 
 ## Version History
 
